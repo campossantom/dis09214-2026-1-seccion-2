@@ -27,7 +27,7 @@ __ejemplo:__ random() da 0.4571.
 *  __random (máximo):__ Devuelve un número decimal entre 0 y el máximo que elijas.  
 __ejemplo:__ random(100) da un número entre 0 y 100.
 *  __random (mínimo, máximo):__ Devuelve un número decimal entre esos dos valores.   
-__ejemplo:__ random(20,50) da un número entre 20 y 50:
+__ejemplo:__ random(20,50) da un número entre 20 y 50.
 
 ## (width, height);  
 Variables integradas en p5, que corresponden a los valores definidos en el createCanvas.  

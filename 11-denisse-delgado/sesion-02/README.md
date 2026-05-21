@@ -75,6 +75,9 @@ Artistas y algoritmos:
       3.3 Distribución: La libertad de redistribuir copias para ayudar a otros.
       3.4 Mejora: La libertad de mejorar el programa y hacer públicas las mejoras, para que toda la comunidad se beneficie. El acceso al código fuente es necesario.
 
+<img width="1230" height="700" alt="5" src="https://github.com/user-attachments/assets/343de9dc-f607-4891-aca8-ad8ccabddbc9" />
+
+
 → Uso, distribución, estudio y mejora
 
 → 1998 manifiesto

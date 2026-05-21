@@ -1,4 +1,4 @@
-# sesión 06 - 14/04
+# sesión 07 - 15/05
 
 # LOOPS WHILE Y FOR
 

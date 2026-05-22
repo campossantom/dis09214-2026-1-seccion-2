@@ -92,7 +92,8 @@ Esta composición se inspira en la estética técnica de las interfaces de siste
 
 ### DIAGRAMA DE FLUJO
 
-<img width="6113" height="8015" alt="Mi primer tablero" src="https://github.com/user-attachments/assets/cdc47116-6776-4635-8138-e85045b4dd20" />
+<img width="2662" height="6008" alt="Sin título" src="https://github.com/user-attachments/assets/ff63370b-5a00-4eb0-8843-e45dc288a344" />
+
 
 ---
 

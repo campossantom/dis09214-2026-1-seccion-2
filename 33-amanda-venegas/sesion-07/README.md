@@ -30,7 +30,7 @@ Lo que busco es mostrar situaciones cotidianas desde otra perspectiva, evidencia
 
 Me inspiré en una imagen encontrada en RedNote, aunque no logré identificar al autor original.
 
-<img width="903" height="1280" alt="image" src="https://github.com/user-attachments/assets/26182615-0403-4dac-8791-052bee865f94" />
+<img width="451" height="640" alt="image" src="https://github.com/user-attachments/assets/26182615-0403-4dac-8791-052bee865f94" />
 
 Universitat Oberta de Catalunya. (2023, 22 de marzo). Mansplaining, manspreading y gaslighting. UOC News. https://www.uoc.edu/es/news/2023/074-mansplaining
 

@@ -48,6 +48,221 @@ De esta manera, la interacción permite que el usuario altere directamente el co
 
 #### Referentes
 Listado y breve descripción de referentes visuales, teóricos o históricos.
-• Diagrama de Flujo (Imagen en PNG ) (Agregada en formato MarkDown)
-• Código de p5.js (Agregado en formato MarkDown)
-• Link al sketch en P5.js en formato EDITABLE.
+
+• Diagrama de Flujo:[![diagrama de flujo] (file:///C:/Users/vimot/Downloads/diagrama%20de%20flujo.pdf)]
+
+• Código de p5.js (Agregado en formato MarkDown): 
+```javascript
+// almacena todas las figuras que representan lo no hombre
+let noHombres = [];
+
+// Variable que indica si existe o no opresión
+let opresion = false;
+
+// Variable para guardar la imagen del símbolo masculino
+let simbolomasculino;
+
+// Variables auxiliares utilizadas en los ciclos y cálculos
+let i;
+let s;
+let d;
+
+// Variable para guardar la imagen de fondo cuando el mouse es presionado
+let fondo;
+
+// Carga las imágenes antes de iniciar el programa
+function preload() {
+  simbolomasculino = loadImage("simbolo masculino.png");
+  fondo = loadImage("fondo.jpeg");
+}
+
+function setup() {
+
+  // Crea un lienzo de 800 x 600 píxeles
+  createCanvas(800, 600);
+
+  // Crea 200 figuras aleatorias
+  for (i = 0; i < 200; i++) {
+
+    // Agrega cada figura al arreglo
+    noHombres.push({
+
+      // Posición inicial aleatoria
+      x: random(width),
+      y: random(height),
+
+      // Tamaño aleatorio
+      size: random(20, 60),
+
+      // Velocidad horizontal aleatoria
+      vx: random(-2, 2),
+
+      // Velocidad vertical aleatoria
+      vy: random(-2, 2),
+
+      // Tipos de figuras
+      type: random(["ellipse", "rect", "triangle", "line"]),
+
+      // Color aleatorio
+      col: color(random(255), random(255), random(255)),
+    });
+  }
+}
+
+function draw() {
+
+  // Si existe opresión aparece una imagen de fondo
+  if (opresion) {
+    image(fondo, 0, 0, width, height);
+  }
+
+  // Si no existe opresión aparece un fondo gris
+  else {
+    background(220);
+  }
+
+  // Configuración del texto
+  fill(0);
+  textSize(18);
+  textAlign(LEFT, TOP);
+
+  // Muestra la frase en pantalla
+  text(
+    "Soy una hormiguita que busca bajo la tierra donde poder refugiar su corazón - Violeta Parra.",
+    150,
+    10,
+    290
+  );
+
+  // Si no hay opresión se muestra el símbolo masculino siguiendo al mouse
+  if (!opresion) {
+    image(simbolomasculino, mouseX, mouseY, 200, 200);
+  }
+
+  // Recorre todas las figuras del arreglo
+  for (s of noHombres) {
+
+    // Actualiza la posición según su velocidad
+    s.x += s.vx;
+    s.y += s.vy;
+
+    // Rebota en los bordes izquierdo y derecho
+    if (s.x < 0 || s.x > width) {
+      s.vx *= -1;
+    }
+
+    // Rebota en los bordes superior e inferior
+    if (s.y < 0 || s.y > height) {
+      s.vy *= -1;
+    }
+
+    // Reacción de las figuras frente al símbolo masculino
+    if (!opresion) {
+
+      // Calcula la distancia entre la figura y el mouse
+      d = dist(s.x, s.y, mouseX, mouseY);
+
+      // Si la figura está cerca del símbolo
+      if (d < 200) {
+
+        // Se mueve alejándose horizontalmente
+        if (s.x < mouseX) {
+          s.x -= 3;
+        } else {
+          s.x += 3;
+        }
+
+        // Se mueve alejándose verticalmente
+        if (s.y < mouseY) {
+          s.y -= 3;
+        } else {
+          s.y += 3;
+        }
+
+        // Agrega un pequeño temblor al movimiento
+        s.x += random(-2, 2);
+        s.y += random(-2, 2);
+      }
+    }
+
+    // Si no hay opresión las figuras recuperan su color
+    if (!opresion) {
+      fill(120);
+    }
+
+    // Si hay opresión las figuras se vuelven grises
+    else {
+      fill(s.col);
+    }
+
+    // Quita el borde de las figuras
+    noStroke();
+
+    // Dibuja una elipse
+    if (s.type === "ellipse") {
+      ellipse(s.x, s.y, s.size);
+    }
+
+    // Dibuja un rectángulo
+    else if (s.type === "rect") {
+      rectMode(CENTER);
+      rect(s.x, s.y, s.size, s.size);
+    }
+
+    // Dibuja un triángulo
+    else if (s.type === "triangle") {
+      triangle(
+        s.x,
+        s.y - s.size / 2,
+        s.x - s.size / 2,
+        s.y + s.size / 2,
+        s.x + s.size / 2,
+        s.y + s.size / 2
+      );
+    }
+
+    // Dibuja una X utilizando dos líneas
+    else if (s.type === "line") {
+
+      // Color de las líneas
+      stroke(opresion ? s.col : 120);
+
+      // Grosor de las líneas
+      strokeWeight(3);
+
+      // Primera diagonal
+      line(
+        s.x - s.size / 2,
+        s.y - s.size / 2,
+        s.x + s.size / 2,
+        s.y + s.size / 2
+      );
+
+      // Segunda diagonal
+      line(
+        s.x + s.size / 2,
+        s.y - s.size / 2,
+        s.x - s.size / 2,
+        s.y + s.size / 2
+      );
+
+      // Elimina el borde
+      noStroke();
+    }
+  }
+}
+
+// Cuando se presiona el mouse desaparece el estado de opresión
+function mousePressed() {
+  opresion = true;
+}
+
+// Cuando se suelta el mouse aparece el estado de opresión
+function mouseReleased() {
+  opresion = false;
+}
+```
+
+
+• Link al sketch en P5.js en formato EDITABLE. 
+(https://editor.p5js.org/kataluduena/sketches/qvp6PsBBr) 

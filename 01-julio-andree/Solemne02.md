@@ -144,7 +144,168 @@ DIAGRAMA DE FLUJO
 
 NUESTRO PROYECTO: label Maker
 -
+[Label Maker](https://editor.p5js.org/StarBerryChiscake/sketches/9coSmJDBw) 
 
+
+``` 
+let video; //Variable que guarda la cámara que vamos a utilizar.
+let faceMesh; //Variable que guardar el modelo de IA (Facemesh) de ml5js.
+let options = { maxFaces: 1, refineLandmarks: false, flipped: false }; // Configuración del reconocimiento facial, reconoce solo una cara (maxFaces), no busca detalles avanzados(refineLandmarks) y no voltea la imagen de la cámara (flipped).
+let faces = []; //Base de datos donde la IA guardará las coordenas del rostro.
+let imagenesBanderas = []; //Lista para guardar las imagenes que subimos a files.
+let banderaSeleccionada; ////Variable que guardará la imagen de la bandera que se esta mostrando en la pantalla.
+let confetti = []; // Lista para almacenar todas las partículas de confeti en una sola variable.
+let cantidadConfeti = 100; // Cantidad de partículas que caerán en la pantalla.
+
+function preload() {
+  //Funcion para cargar los archivos antes de iniciar.
+  faceMesh = ml5.faceMesh(options); //Inicializamos el modelo faceMesh de ml5js y dandole las configuraciones que guardamos en el let options.
+  //Cargamos las banderas
+  imagenesBanderas[0] = loadImage("banderalgbt.png");
+  imagenesBanderas[1] = loadImage("banderal.png");
+  imagenesBanderas[2] = loadImage("bandera3.png");
+  imagenesBanderas[3] = loadImage("banderagay.png");
+  imagenesBanderas[4] = loadImage("banderalesb.png");
+}
+
+function setup() {
+  // Función que se ejecuta solo una.
+  createCanvas(640, 480); //Crea un lienzo de 640 x 480.
+  rectMode(CENTER);
+
+  //Bucle (loop) que se va a repetir exactamente 100 veces (desde i = 0 hasta i = 99).
+  for (let i = 0; i < cantidadConfeti; i++) {
+    //Crea un color aleatorio para el confeti actual. Formato RGBA (Rojo, Verde, Azul, Alfa/Transparencia).
+    let col = color(
+      random(100, 255),
+      random(100, 255),
+      random(100, 255),
+      random(120, 240)
+    );
+    confetti[i] = new Confetto(
+      random(width),
+      random(-50, 0),
+      random(10, 20),
+      col
+    ); //En la posición i de nuestra lista, guardamos un "nuevo" objeto de la clase Confetto (que está definida más abajo). Le pasa cuatro datos al azar (Argumentos): Una posición X cualquiera dentro del ancho del lienzo (random(width)). Una posición Y inicial cerca del borde superior (random(0, 30)). Un tamaño entre 10 y 20 píxeles. El color(col) que acabamos de calcular.
+  }
+  video = createCapture(VIDEO); //Activa la cámara web del usuario.
+  video.size(640, 480); //Configuramos la resolución del video para que coincida con el lienzo.
+  video.hide(); // Sirve para ocultar el video original que p5js crea por defecto abajo del lienzo.
+  faceMesh.detectStart(video, gotFaces); //Empezamos a decirle a ml5js que analice el video continuamente y cuando detecte un rostro llamará a la función "gotFaces" para darnos los datos.
+  banderaSeleccionada = random(imagenesBanderas); //Con random se selecciona una bandera aleatoria de nuestra lista.
+}
+
+function gotFaces(result) {
+  //Función de respuesta de la IA, result contiene toda la información que recopiló la IA de ml5js.
+  faces = result; //Guardamos los resultados dentro de la variable faces para usarlas en nuestro draw.
+}
+
+function draw() {
+  //Función Draw que se ejecuta a 60fps de forma continua.
+  image(video, 0, 0, width, height); //Dibuja el video de la cámara en el lienzo cubriendo todo el espacio con width y height.
+
+  if (banderaSeleccionada === imagenesBanderas[1]) {
+    //Si el archivo de la banderaSeleccionada que se muestra es el que guardamos en la posición 1 ("banderal.png"), Si la condición se cumple, va hacía la configuración del confetti y  dibuja cada partícula en la pantalla.
+
+    for (let c of confetti) {
+      c.move();
+      c.display();
+    } //Bucle for, lee la lista de confetis uno por uno (llamando temporalmente c a cada uno) y les ordena hacer dos tareas que tienen definidas en su clase: Actualizar su posición (move()) y dibujarse en la pantalla (display()).
+
+    //Texto en la pantalla.
+    push(); // Aislamos los estilos del texto para que no afecten a otros dibujos.
+    fill(255); // Color de la letra blanco.
+    stroke(0); // Borde negro.
+    strokeWeight(4); // Grosor del borde de la letra.
+    textSize(42); // Tamaño de la letra.
+    textAlign(CENTER, TOP); // Centra el texto horizontalmente y lo alinea desde el borde superior.
+    text("¡¡¡¡¡¡¡¡ES TRANS!!!!!!!!", width / 2, 40); // Dibuja el texto en la mitad del ancho y a 40 píxeles de la parte superior.    
+    square(90, 67,20); //Figura para hacer un cuadrado
+    quad(560, 48, 548, 62, 560, 76, 572, 62); //Cuadrilatero para realizar un rombo.
+    pop(); //Encapsular nuestra configuración para el texto.
+  }
+
+  for (let i = 0; i < faces.length; i++) { // let 1 es el primer valor que tiene el computador, al no haber nadie frente a la cámara i vale 0 y como 0 < 0(faces.length) la condición es false y no se ejecuta nada.Si hay alguien frente a la cámara i pasa a valer 1 y como 0 < 1(faces.length) la condición es verdadera y se ejecuta el programa.
+    let face = faces[i]; // Toma el rostro que se está analizando de la lista faces y lo guarda en la variable face.
+
+    if (face.keypoints && face.keypoints[9]) {
+      //Determinamos la posición de la frente de la cara que según la biblioteca de ml5js se encuentra en el número 9.
+      let xRostro = face.keypoints[9].x; //Creamos la variable let xRostro para guardar la posición horizontal de la cara. Con ".x" le pedimos al punto 9 su valor en el eje X; a cuántos pixeles de distancia se encuentra la frente desde el borde horizontal de la pantalla.
+      let yRostro = face.keypoints[9].y; //Creamos la variable let yRostro para guardar la posición vertical de la cara. Con ".y" le pedimos al punto 9 su valor en el eje Y; a cuántos pixeles de distancia se encuentra la frente desde el borde vertical de la pantalla.
+
+      let anchoBandera = 120; //Determinamos el ancho de nuestra bandera.
+      let altoBandera = 80; //Determinamos el alto de nuestra bandera.
+
+      image(
+        banderaSeleccionada, //Dibujamos la bandera seleccionada sobre el video
+        xRostro - anchoBandera / 2, //Desplazamos la imagen a la izquierda a la mitad de su ancho para que quede centrada en el eje x, al restarle la mitad la bandera se centra con el centro de nuestra frente.
+        yRostro - 100, //Restamos 100 pixeles en el eje Y para que la bandera se posicione por encima de los ojos.
+        anchoBandera, //Le asignamos el ancho ya definido en let anchoBandera
+        altoBandera //le asignamos el alto ya definido en let altoBandera.
+      );
+    }
+  }
+}
+
+function mousePressed() {
+  banderaSeleccionada = random(imagenesBanderas); //Cada que el usuario de click el código muestra una bandera al azar.
+}
+
+//Configuración del confetti
+class Confetto {
+  //class: es una plantilla o molde para crear objetos. Te permite empaquetar variables (datos) y funciones (comportamientos) juntos. Define qué propiedades tiene cada confetti y qué debe hacer.
+  constructor(x, y, s, c) {
+    //This es una referencia al objeto actual en el que se está ejecutando el código. Permite diferenciar entre una variable global y la propiedad específica de un objeto individual.
+    this.x = x; //Punto x del confetti.
+    this.y = y; //Punto y del confetti.
+    this.size = s; //Tamaño del confetti.
+    this.color = c; // Color del confetti.
+    this.shape = round(random(0, 1)); //Elige al azar si el confeti será un círculo o un rectángulo. random(0, 1) da un decimal como 0.3 o 0.7, y round() lo redondea al entero más cercano (o 0 o 1).
+    this.speed = random(0.5, 2); //Define qué tan rápido va a caer hacia abajo el confeti.
+
+    //Variables matemáticas para el balanceo estético.
+    this.time = random(1, 100); //Contador que avanzará constantemente.
+    this.amp = random(2, 30); //(amplitud) define qué tan amplio será el "vaivén" u oscilación horizontal y vertical del confeti al caer.
+  }
+
+  display() {
+    //Apariencia del confetti.
+    push(); //Inicio grupo de dibujo aislado.
+    noStroke(); //Sin relleno.
+    fill(this.color); //Relleno.
+    translate(this.x, this.y); //Traslación de figura en x,y.
+    translate(this.amp * cos(this.time), this.amp * sin(this.time)); //Desplaza un poco más el origen usando trigonometría. Al combinar el coseno (cos) y el seno (sin) con el tiempo que avanza, el confetti no cae en línea recta, sino que se mueve haciendo órbitas circulares o elípticas en el aire, imitando cómo flota el papel real.
+    rotate(this.time); //Rotación del confetti sobre su propo eje usando el contador time.
+    scale(cos(this.time), sin(this.time)); //Escala visual en los ejes x e y usando ondas mecánicas. Como el coseno y el seno oscilan entre -1 y 1, provoca un efecto visual muy genial donde el confeti parece "aplanarse" y "estirarse".
+     
+    if (this.shape == 1) {
+      //Si la propiedad shape es igual a 1, dibuja un círculo (ellipse). Si no, dibuja un rectángulo (rect) cuya altura es la mitad de su ancho.
+      ellipse(0, 0, this.size); //dibuja un circulo en las cordenadas 0,0 del tamaño de la propiedad size.
+    } else {
+      //de lo contrario
+      rect(0, 0, this.size, this.size / 2); //dibuja una rectangulo con ancho size y altura size/2.
+      
+    } 
+    pop(); //Fin grupo de dibujo aislado.
+  }
+
+  move() {
+    //Movimiento del confetti.
+    this.y += this.speed; //Aumenta la posición y del confeti según su velocidad actual, lo que hace que caiga hacia abajo.
+    //fUNCIÓN MAP
+    let gravedadDinamica = map(this.y, 0, height, 0.002, 0.015); //map toma la posición y (this.y) y la combierte a un valor de ravedad dinámica.
+    this.speed += gravedadDinamica; 
+    this.time += 0.05; //Velocidad de los giros del confeti.
+    if (this.y > height) {
+      //Si la propiedad this.y es mayor a la altura del canvas.
+      this.y = random(-20, 0); //this.y es igual a 0.
+      this.x = random(width);
+      this.speed = random(0.5, 2); //this.speed es igual a un valor aleatorio entre 0,5 y 2
+    }
+  }
+}
+```
 explicación de nuestro sistema:
 -
 • ¿Cuál es la regla de oro de tu sistema?
@@ -155,9 +316,15 @@ el codigo que creamos funciona en base al reconocimiento facial de el usuario qu
 
 con esta logica podemos representar como la sociedad simplifica al usuario a un simple objeto para detectar visualmente y ser "juzgado" por su apariencia la cual despues es analizada y etiquetada, deshumanizando al usuario. 
 • Input / Output y sistema
-¿Qué datos entran? (INPUT) reconocimiento facial del usuario 
-¿Cómo se procesan y transforman?
-¿Qué respuesta visual producen? (OUTPUT) se clasifica con una bandera LGBT al detectar tu rostro
+
+
+¿Qué datos entran? (INPUT) *reconocimiento facial del usuario y click a la pantalla.*
+¿Qué respuesta visual producen? (OUTPUT) *se clasifica con una bandera LGBT al detectar tu rostro o cambia con el click del mouse.*
+
+
 • Pensamiento computacional
+
+
 Reglas que gobiernan el sistema (inputs, procesos, outputs)
-Explicación del sistema de interactividad este sitema 
+Explicación del sistema de interactividad 
+*el programa al detectar el rostro del usuario empieza a seleccionar una imagen de la bandera LGBT aleatoria la cual se queda pegada a la frente de este con la opcion de presionar el mouse y obtener otro resultado de imagen.*

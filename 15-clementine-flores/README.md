@@ -48,8 +48,7 @@ De esta manera, la interacción permite que el usuario altere directamente el co
 
 #### Referentes
 Listado y breve descripción de referentes visuales, teóricos o históricos.
-
-• Diagrama de Flujo:[![diagrama de flujo] (file:///C:/Users/vimot/Downloads/diagrama%20de%20flujo.pdf)]
+• Diagrama de Flujo: (En el documento) 
 
 • Código de p5.js (Agregado en formato MarkDown): 
 ```javascript

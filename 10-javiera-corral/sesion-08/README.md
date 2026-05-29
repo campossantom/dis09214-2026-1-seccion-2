@@ -273,5 +273,62 @@ class cuadrado {
 
 <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/e71e7bf6-3f3b-4c82-8795-fd715d02ed47" />
 
+CLASS + ARRAY 
+-
+ejemplo7 cuadrados 
+
+```
+let cuadrados = [];
+
+function setup() {
+  createCanvas(500, 500);
+  frameRate(20);
+  for (let i = 0; i < 10; i++) {
+    cuadrados[i] = new cuadrado();
+  }
+}
+
+function draw() {
+  background(129, 167, 242);
+
+  for (let i = 0; i < cuadrados.length; i++) {
+    cuadrados[i].move();
+    cuadrados[i].show();
+  }
+}
+
+class cuadrado {
+  constructor() {
+    this.x = 250;
+    this.y = 250;
+  }
+
+  move() {
+    this.x = this.x + random(-5, 5);
+    this.y = this.y + random(-5, 5);
+  }
+  show() {
+    stroke(random(255), random(255), random(255));
+    strokeWeight(5);
+    noFill();
+    rect(this.x, this.y, 20, 20);
+  }
+}
+``` 
+
+<img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/56c6d580-bc35-4b82-ac3a-2774844766ba" />
+
+
+{ENCARGO 5}
+-
+
+• Deben crear su propio sistema de partículas, con 5 imágenes (mínimo) en .PNG
+• Pueden crear ustedes sus diseños o usar fotos recortadas.
+• Sean Creativos - tema LIBRE
+
+• FECHA DE ENTREGA: Antes de la clase del viernes 5 de junio
+• CARPETA DE ENTREGA:
+• https://drive.google.com/drive/folders/1bxa1eLaDP5t0ACkSEbhzwS7g2mveRgsz?usp=sharing
+
 
 

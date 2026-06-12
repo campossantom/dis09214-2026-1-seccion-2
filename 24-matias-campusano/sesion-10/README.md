@@ -47,5 +47,8 @@ RECORDAR en el push and pop el Translate cambia el 0,0 desde donde parte particu
 
 Siempre usando push y pop. Para figuras dentro de un elemento.
 
+*   se pueden agregar tipografías y audios
+*   recordar nombrar y crear carpetas en p5.
+
 
 

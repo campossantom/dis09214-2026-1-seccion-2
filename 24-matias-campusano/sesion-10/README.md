@@ -40,6 +40,11 @@ Usar TRANSLATE - PUSH Y POP
 En lugar de provocar situaciones matematicas complejas, uso de push y pop. 
 Usamos Translate para mover el origen del mundo.
 
+Para que no deforme hay que calcular el tamaño (ejemplo bandera 3:2) 
+let canvasWidth=min(windowWidth, (windowHeight+3)/2); 
+
+RECORDAR en el push and pop el Translate cambia el 0,0 desde donde parte particularmente ese comando.
+
 Siempre usando push y pop. Para figuras dentro de un elemento.
 
 

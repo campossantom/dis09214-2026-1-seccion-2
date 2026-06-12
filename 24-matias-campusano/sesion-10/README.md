@@ -20,6 +20,27 @@ Ej: A un cuarto de l apantalla en eje x: (width*25)
 
 *  Aprovechar el uso de mousePrint para acompañarse quizás en la diagramación y ubicar cosas, de todas formas hay que usar un pensamiento lógico racional y ubicar las cosas considerando la readaptación.
 
-*  
+###Paso 4 
+Incluir factor de referencia 
+referencia= min(width,heigth)
+
+Se crea una referencia global y la asignamos para que calcule el mínimo.
+
+let referencia;
+functcion setup(){
+createCanvas(wind...
+referencia=min(width,heigth);
+}
+
+fc draw(){
+backg(0);
+
+### Paso 5
+Usar TRANSLATE - PUSH Y POP 
+En lugar de provocar situaciones matematicas complejas, uso de push y pop. 
+Usamos Translate para mover el origen del mundo.
+
+Siempre usando push y pop. Para figuras dentro de un elemento.
+
 
 

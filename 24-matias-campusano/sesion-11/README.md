@@ -33,3 +33,13 @@ nombreVariable.isPlaying (devuelve a true si el sonido esta sonando en ese momen
 .isPaused() Devuelve true si el sonido fue congelado con pause()
 .isLooping() Devuelve true si el sonido esta configurado para repetirse en loop()
 .currentTime 
+
+## p5.sound 
+
+componentes de un sintetizador básico 
+Oscilador p5.Oscillator 
+sine - triangle - sawtooth - square 
+Frecuencia (frequence) 
+Amplitud (amplitude)
+
+### Revisión de código e intereses :)
